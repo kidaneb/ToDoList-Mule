@@ -1,0 +1,116 @@
+body{
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    height:700px ;
+    width: 700px;
+    
+    text-align: center;
+    
+}
+.main-title{
+    font-size: 32px;
+    margin: 5px;
+}
+.input-container{
+    height: 20%;
+    width: 90%;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+}
+.input-container textarea{
+    resize: none;
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size:20px;
+    color: aliceblue;
+    margin: 4px;
+    padding: 10px;
+    
+}
+.input-container button{
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 4px;
+    font-size: 20px;
+
+}
+.todo-item-container{
+    height: 70%;
+    width: 90%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+}
+.todo-item-container .todo-item{
+    height:30%;
+    width: 96%;
+    
+    margin: 5px;
+    display: flex;
+    justify-content: space-evenly;
+}
+/* .todo-item-container .todo-item:hover{
+    transform: scale(1.035);
+    border: 1px solid white;
+    border-radius: 5px;
+} */
+.todo-item-container .todo-item .todo-description{
+    height:87% ;
+    width: 65%;
+    
+    border-radius: 5px;
+    padding: 10px;
+    overflow-y: scroll;
+    text-align:justify;
+    transition: transform 0.2s ease;
+}
+.todo-item-container .todo-item .todo-description:hover{
+    transform: scale(1.02);
+}
+.todo-item-container .todo-item .todo-action{
+    height:100%;
+    width:30% ;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.todo-item-container .todo-item .todo-action button{
+    height: 40%;
+    width: 90%;
+    margin:4px;
+    padding: 10px;
+    font-size: 20px;
+   
+    background-color: transparent;
+    color: aliceblue;
+    cursor: pointer;
+}
+.todo-item-container .todo-item .todo-action .complete{
+    border: 1px solid cyan ;
+    border-radius: 5px;
+}
+.todo-item-container .todo-item .todo-action .remove{
+    border:1px solid red;
+    border-radius: 5px;
+}
