@@ -66,12 +66,13 @@ body{
     margin: 5px;
     display: flex;
     justify-content: space-evenly;
+    transition: transform 0.6s ease;
 }
-/* .todo-item-container .todo-item:hover{
+.todo-item-container .todo-item:hover{
     transform: scale(1.035);
-    border: 1px solid white;
+    border: 1px solid grey;
     border-radius: 5px;
-} */
+}
 .todo-item-container .todo-item .todo-description{
     height:87% ;
     width: 65%;
@@ -82,9 +83,9 @@ body{
     text-align:justify;
     transition: transform 0.2s ease;
 }
-.todo-item-container .todo-item .todo-description:hover{
+/* .todo-item-container .todo-item .todo-description:hover{
     transform: scale(1.02);
-}
+} */
 .todo-item-container .todo-item .todo-action{
     height:100%;
     width:30% ;
@@ -109,8 +110,17 @@ body{
 .todo-item-container .todo-item .todo-action .complete{
     border: 1px solid cyan ;
     border-radius: 5px;
+    transition: transform 0.5s ease;
+}
+.todo-item-container .todo-item .todo-action .complete:hover{
+    transform: scale(1.03);
 }
 .todo-item-container .todo-item .todo-action .remove{
     border:1px solid red;
     border-radius: 5px;
+    transition: transform 0.5s ease;
+}
+.todo-item-container .todo-item .todo-action .remove:hover{
+    background-color: rgba(255, 0, 0, 0.582);
+    transform:scale(1.03)
 }
