@@ -39,6 +39,7 @@ body{
     color: aliceblue;
     margin: 4px;
     padding: 10px;
+    scroll-behavior: smooth;
     
 }
 .input-container button{
@@ -78,10 +79,14 @@ body{
     width: 65%;
     
     border-radius: 5px;
+    font-size: larger;
     padding: 10px;
     overflow-y: scroll;
     text-align:justify;
     transition: transform 0.2s ease;
+}
+.completed{
+    text-decoration: line-through;
 }
 /* .todo-item-container .todo-item .todo-description:hover{
     transform: scale(1.02);
