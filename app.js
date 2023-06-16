@@ -9,10 +9,11 @@ todoInput.addEventListener('keypress', (e)=>{
 });
 
 let id = 0;
+let activeId;
+let activeEditId;
 if (localStorage.getItem("id")) {
   id = JSON.parse(localStorage.getItem("id"));
 }
-
 todos = [];
 if (localStorage.getItem("todos")) {
   todos = JSON.parse(localStorage.getItem("todos"));
@@ -31,8 +32,7 @@ function completeTodo(id) {
     .getElementById(`todo-description-${id}`)
     .classList.toggle("completed");
 }
-
-function removeTodo (id,dialogue){
+function removeTodo (id){
   todos.forEach((todo, index) =>{
     if(todo.id == id){
       todos.splice(index,1);
@@ -40,106 +40,10 @@ function removeTodo (id,dialogue){
   })
   localStorage.setItem('todos', JSON.stringify(todos));
   document.getElementById(`todo-item-${id}`).remove();
-  closeDialogue(dialogue)
+
   console.log('1');
 }
-function closeDialogue(dialogue){
-  const mainContainer = document.getElementById('main-container');
-  mainContainer.style.opacity = '1';
-  dialogue.remove();
-}
-function removeDialogueBox(id){
-  
-  const dialogue = document.createElement('div');
-  dialogue.className = 'dialogue';
 
-  // CREATING THE CLOSE BUTTON
-  const closeButton = document.createElement('button');
-  closeButton.className = 'close';
-  closeButton.innerHTML = `<span class="material-symbols-outlined">close</span>`;
-  closeButton.addEventListener('click' ,()=>closeDialogue(dialogue));
-  // CREATING DIALOGUE BOX TITLE
-  const dialogueTitle = document.createElement('div');
-  dialogueTitle.className ='title';
-  dialogueTitle.innerHTML = 'Delete Button Clicked';
-  // CREATING DIALOGUE BOX BODY
-  const dialogueBody = document.createElement('div');
-  dialogueBody.className = 'body';
-  dialogueBody.innerHTML ='Are you sure you want to delete this Todo?';
-  // CREATING DIALOGUE BOX BUTTON CONTAINER AND BUTTONS ON IT
-  const dialogueButtonContainer = document.createElement('div');
-  dialogueButtonContainer.className = 'button-container';
-  // BUTTONS IN BUTTON CONTAINER
-  const accept = document.createElement('button');
-  accept.className = 'accept';
-  accept.innerHTML = 'YES';
-  accept.addEventListener('click', ()=>removeTodo(id,dialogue))
-  const cancel = document.createElement('button');
-  cancel.className = 'cancel';
-  cancel.innerHTML ='NO';
-  cancel.addEventListener('click' ,()=>closeDialogue(dialogue));
-  // APPENDING ACCEPT AND CANCEL BUTTONS TO BUTTON-CONTAINER
-  dialogueButtonContainer.appendChild(cancel);
-  dialogueButtonContainer.appendChild(accept);
-
-  // APPENDING THE BUTTON-CONTAINER, TITLE, BODY TO THE DIALOGUE ELEMENT
-dialogue.appendChild(closeButton);
-dialogue.appendChild(dialogueTitle);
-dialogue.appendChild(dialogueBody);
-dialogue.appendChild(dialogueButtonContainer);
-
-// BLURRING THE OTHER PAGE ELEMENTS
-const mainContainer = document.getElementById('main-container');
-mainContainer.style.opacity = '0.3';
-
-// PUTTING THE DIALOGUE ELEMENT ON THE PAGE PROPERLY
-document.querySelector('body').insertBefore(dialogue, mainContainer);
-  
-}
-function validateDialogue(){
-  const dialogue = document.createElement('div');
-  dialogue.className = 'dialogue';
-
-  // CREATING THE CLOSE BUTTON
-  const closeButton = document.createElement('button');
-  closeButton.className = 'close';
-  closeButton.innerHTML = `<span class="material-symbols-outlined">close</span>`;
-  closeButton.addEventListener('click' ,()=>closeDialogue(dialogue));
-  // CREATING DIALOGUE BOX TITLE
-  const dialogueTitle = document.createElement('div');
-  dialogueTitle.className ='title';
-  dialogueTitle.innerHTML = 'Error Input';
-  // CREATING DIALOGUE BOX BODY
-  const dialogueBody = document.createElement('div');
-  dialogueBody.className = 'body';
-  dialogueBody.innerHTML ='Please Enter the Proper input.Todos must have more than five character. ';
-  // CREATING DIALOGUE BOX BUTTON CONTAINER AND BUTTONS ON IT
-  const dialogueButtonContainer = document.createElement('div');
-  dialogueButtonContainer.className = 'button-container';
-  // BUTTONS IN BUTTON CONTAINER
-  const accept = document.createElement('button');
-  accept.className = 'accept';
-  accept.innerHTML = 'OK';
-  accept.addEventListener('click', ()=>closeDialogue(dialogue))
-  
-  // APPENDING ACCEPT AND CANCEL BUTTONS TO BUTTON-CONTAINER
-  
-  dialogueButtonContainer.appendChild(accept);
-
-  // APPENDING THE BUTTON-CONTAINER, TITLE, BODY TO THE DIALOGUE ELEMENT
-dialogue.appendChild(closeButton);
-dialogue.appendChild(dialogueTitle);
-dialogue.appendChild(dialogueBody);
-dialogue.appendChild(dialogueButtonContainer);
-
-// BLURRING THE OTHER PAGE ELEMENTS
-const mainContainer = document.getElementById('main-container');
-mainContainer.style.opacity = '0.3';
-
-// PUTTING THE DIALOGUE ELEMENT ON THE PAGE PROPERLY
-document.querySelector('body').insertBefore(dialogue, mainContainer);
-  
-}
 function createtodoItemElement(id, description, complete) {
   const todoItem = document.createElement("div");
   todoItem.className = "todo-item";
@@ -163,14 +67,32 @@ function createtodoItemElement(id, description, complete) {
   completeButton.innerHTML = "Complete";
   completeButton.addEventListener("click", () => completeTodo(id));
 
+  const editButton = document.createElement("button");
+  editButton.className = "edit";
+  editButton.id = `edit-${id}`;
+  editButton.innerHTML = "Edit";
+  editButton.addEventListener('click', () => {
+    activeEditId = id;
+    displayEditBox(description)})
+
   const removeButton = document.createElement("button");
   removeButton.className = "remove";
   removeButton.id = `remove-${id}`;
   removeButton.innerHTML = "Remove";
-  removeButton.addEventListener("click", () => removeDialogueBox(id));
+  removeButton.addEventListener("click", () => {
+    activeId = id;
+    displayDialogueBox(
+        'Delete Button clicked',
+        'Are you sure you want to delete this todo?',
+        true,
+        true,
+        'DELETE_TODO'
+        )
+  });
   
 
   todoAction.appendChild(completeButton);
+  todoAction.appendChild(editButton);
   todoAction.appendChild(removeButton);
 
   todoItem.appendChild(todoDescription);
@@ -183,9 +105,6 @@ function createtodoItemElement(id, description, complete) {
       document.getElementById("todo-item-container").firstChild
     );
 }
-
-
-
 function createTodoItem() {
   todoDescription = todoInput.value;
 
@@ -205,12 +124,13 @@ function createTodoItem() {
     todoInput.value = "";
   }
   else{
-    validateDialogue();
+    
   }
 
 }
 function validateInput(input){
   if(input === ""){
+    displayDialogueBox('Input Error', 'Input can not be empty', false, true, 'INPUT_ERROR');
     return false;
   }
   else if(input.length < 5){
@@ -220,4 +140,93 @@ function validateInput(input){
     return true;
   }
 }
-// localStorage.clear();
+
+// CREATE NEW FUNCTIONS
+let MODE ='';
+const mainContainer = document.getElementById('main-container');
+const dialogueBox = document.getElementById('dialogue');
+const closeButton = document.getElementById('close');
+const dialogueTitle = document.getElementById('title');
+const dialogueBody = document.getElementById('body');
+const cancelButton =  document.getElementById('cancel');
+const acceptButton = document.getElementById('accept');   
+
+acceptButton.addEventListener('click', () => {
+  if (MODE === 'INPUT_ERROR') {
+    closeDialogueBox();
+  }
+  if (MODE === 'DELETE_TODO') {
+    console.log('1');
+    removeTodo(activeId);
+    closeDialogueBox();
+  }
+});
+
+cancelButton.addEventListener('click', closeDialogueBox);
+closeButton.addEventListener('click', closeDialogueBox);
+
+
+function displayDialogueBox(
+  title,
+  body,
+  cancel_visible,
+  accept_visible,
+  mode
+  ){
+    MODE = mode;
+  dialogueTitle.innerText = title;
+  dialogueBody.innerText = body;
+
+  cancel_visible
+      ?(cancelButton.style.display = 'flex')
+      :(cancelButton.style.display = 'none');
+  accept_visible
+      ?(acceptButton.style.display = 'flex')
+      :(acceptButton.style.display = 'none');
+
+  dialogueBox.style.display = 'flex';
+  mainContainer.style.opacity = '0.2';
+  
+
+}
+function closeDialogueBox(){
+  dialogueBox.style.display = 'none';
+  mainContainer.style.opacity = '1';
+}
+
+//EDIT FUNCTION
+const editBox = document.getElementById('edit-box');
+const editCloseButton = document.getElementById('edit-close-button');
+const editInput = document.getElementById('edit-input');
+const saveButton = document.getElementById('save-button');
+
+saveButton.addEventListener('click', () => {
+  saveEditedTodo(activeEditId);
+})
+
+editCloseButton.addEventListener('click', closeEditBox);
+
+function saveEditedTodo(id){
+  todos.forEach(todo => {
+    if(todo.id === id){
+      todo.description = editInput.value; 
+    }
+  })
+  localStorage.setItem('todos', JSON.stringify(todos));
+  todos.forEach((todo) => {
+    createtodoItemElement(todo.id, todo.description, todo.complete);
+  });
+  
+  closeEditBox();
+}
+function displayEditBox(description){
+  editBox.style.display = 'flex';
+  editInput.value = description;
+  editInput.focus();
+  mainContainer.style.opacity = '0.2';
+}
+
+function closeEditBox(){
+  editBox.style.display = 'none';
+  mainContainer.style.opacity = '1';
+}
