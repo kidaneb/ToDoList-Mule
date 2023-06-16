@@ -15,7 +15,7 @@ body{
     width: 700px;
     
     text-align: center;
-    
+    z-index: 10;
 }
 .main-title{
     font-size: 32px;
@@ -215,21 +215,7 @@ body{
     background-color: transparent;
     color: aliceblue;
 }
-.dialogue{
-    height: 300px;
-    width:600px;
-    border: 1px solid grey;
-    border-radius: 10px;
-    background-color:white;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    z-index: 1;    
-}
-  
+ 
 
 .dialogue{
     height: 300px;
@@ -243,7 +229,7 @@ body{
     align-items: center;
     justify-content: center;
     gap: 3px;
-    z-index: 1;    
+    z-index: 5;    
 }
 .dialogue .close{
     align-self: start;
@@ -326,7 +312,7 @@ body{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    
+    z-index: 5;
 }
 .edit-box .edit-close-button{
     align-self: flex-start;
@@ -372,4 +358,11 @@ body{
     color: aliceblue;
     background-color: transparent;
     margin: 10px;
+}
+.background{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    position: absolute;
+    z-index:0 ;
 }

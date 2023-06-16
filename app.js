@@ -143,6 +143,7 @@ function validateInput(input){
 
 // CREATE NEW FUNCTIONS
 let MODE ='';
+let ACTIVE_MODE='';
 const mainContainer = document.getElementById('main-container');
 const dialogueBox = document.getElementById('dialogue');
 const closeButton = document.getElementById('close');
@@ -150,6 +151,19 @@ const dialogueTitle = document.getElementById('title');
 const dialogueBody = document.getElementById('body');
 const cancelButton =  document.getElementById('cancel');
 const acceptButton = document.getElementById('accept');   
+const background = document.getElementById('background');
+
+background.addEventListener('click', bg)
+function bg(){
+  if(ACTIVE_MODE === 'DELETE'){
+  closeDialogueBox();}
+  else if (ACTIVE_MODE === 'EDIT'){
+  closeEditBox();}
+  mainContainer.style.zIndex = '10';
+  background.style.zIndex = '5';
+  editBox.style.zIndex = '0';
+}
+
 
 acceptButton.addEventListener('click', () => {
   if (MODE === 'INPUT_ERROR') {
@@ -174,6 +188,7 @@ function displayDialogueBox(
   mode
   ){
     MODE = mode;
+    ACTIVE_MODE = 'DELETE';
   dialogueTitle.innerText = title;
   dialogueBody.innerText = body;
 
@@ -186,7 +201,9 @@ function displayDialogueBox(
 
   dialogueBox.style.display = 'flex';
   mainContainer.style.opacity = '0.2';
-  
+  mainContainer.style.zIndex = '0';
+  background.style.zIndex = '5';
+  dialogueBox.style.zIndex = '10';
 
 }
 function closeDialogueBox(){
@@ -207,23 +224,19 @@ saveButton.addEventListener('click', () => {
 editCloseButton.addEventListener('click', closeEditBox);
 
 function saveEditedTodo(id){
-  todos.forEach(todo => {
-    if(todo.id === id){
-      todo.description = editInput.value; 
-    }
-  })
-  localStorage.setItem('todos', JSON.stringify(todos));
-  todos.forEach((todo) => {
-    createtodoItemElement(todo.id, todo.description, todo.complete);
-  });
-  
+
+  document.getElementById(`todo-description-${id}`).innerText = editInput.value;
   closeEditBox();
 }
 function displayEditBox(description){
+  ACTIVE_MODE = 'EDIT';
   editBox.style.display = 'flex';
   editInput.value = description;
   editInput.focus();
   mainContainer.style.opacity = '0.2';
+  mainContainer.style.zIndex = '0';
+  background.style.zIndex = '5';
+  editBox.style.zIndex = '10';
 }
 
 function closeEditBox(){
