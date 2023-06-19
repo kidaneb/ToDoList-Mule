@@ -243,19 +243,18 @@ function closeEditBox() {
 //ADDING ANIMATION TO IT
 let pos = 0;
 function deleteAnimation(activeId) {
-  pos += 1;
+  pos += 5;
 
-  if (pos < 615) {
+  if (pos < 920) {
     document.getElementById(
-      `todo-description-${activeId}`
+      `todo-item-${activeId}`
     ).style.transform = `translateX(${pos}px)`;
-    document.getElementById(
-      `todo-action-${activeId}`
-    ).style.transform = `translateX(${pos}px)`;
+    
 
-    requestAnimationFrame(() => deleteAnimation(activeId));
+    setTimeout(requestAnimationFrame(() => deleteAnimation(activeId)), 1000/100)
+    
     console.log(pos);
-  } else if (pos === 615) {
+  } else if (pos === 920) {
     removeTodo(activeId);
     pos = 0;
     return;
