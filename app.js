@@ -43,7 +43,6 @@ function removeTodo(id) {
 
   console.log("1");
 }
-
 function createtodoItemElement(id, description, complete) {
   const todoItem = document.createElement("div");
   todoItem.className = "todo-item";
@@ -115,7 +114,6 @@ function createTodoItem() {
       complete: false,
     };
     id++;
-    localStorage.setItem("id", JSON.stringify(id));
 
     todos.push(todoItem);
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -243,18 +241,17 @@ function closeEditBox() {
 //ADDING ANIMATION TO IT
 let pos = 0;
 function deleteAnimation(activeId) {
-  pos += 5;
+  pos += 10;
 
-  if (pos < 920) {
+  if (pos < 1240) {
     document.getElementById(
       `todo-item-${activeId}`
-    ).style.transform = `translateX(${pos}px)`;
-    
+    ).style.transform = `translateX(${pos}px)`;    
 
-    setTimeout(requestAnimationFrame(() => deleteAnimation(activeId)), 1000/100)
+    setTimeout(requestAnimationFrame(() => deleteAnimation(activeId)), 1000/60)
     
     console.log(pos);
-  } else if (pos === 920) {
+  } else if (pos === 1240) {
     removeTodo(activeId);
     pos = 0;
     return;

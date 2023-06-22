@@ -12,8 +12,7 @@ body{
     align-items: center;
     color: aliceblue;
     height:700px ;
-    width: 700px;
-    
+    width: 700px;    
     text-align: center;
     z-index: 10;
 }
@@ -59,7 +58,7 @@ body{
     justify-content: flex-start;
     align-items: center;
     gap: 4px;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 .todo-item-container .todo-item{
     height:40%;
@@ -246,9 +245,17 @@ body{
     align-items: center;
     justify-content: center;
 }
+.dialogue .close:hover{
+    background-color: red;
+}
 .dialogue .close .material-symbols-outlined{
     font-weight: bolder;
     color: red;
+}
+.dialogue .close .material-symbols-outlined:hover{
+    font-weight: bolder;
+    color: whitesmoke;
+    
 }
 .dialogue .title{
     color: aliceblue;
@@ -291,6 +298,11 @@ body{
     align-items: center;
     
 }
+.dialogue .button-container .accept:hover{
+    background-color: cyan;
+    color: antiquewhite;
+    font-weight: bolder;
+}
 .dialogue .button-container .cancel{
     height: 60%;
     width: 20%;
@@ -303,6 +315,11 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.dialogue .button-container .cancel:hover{
+    background-color: red;
+    color: antiquewhite;
+    font-weight: bolder;
 }
 /* FOR EDIT WINDOW */
 .edit-box{
@@ -323,10 +340,25 @@ body{
     height: 40px ;
     width: 40px;
     border-radius: 50%;
+    
     border: 1px solid grey;
     display: flex;
     justify-content: center;
     align-items: center;
+
+}
+.edit-box .edit-close-button .material-symbols-outlined{
+    font-weight: bolder;
+    color: red;
+}
+.edit-box .edit-close-button .material-symbols-outlined:hover{
+    font-weight: bolder;
+    color: whitesmoke;
+}
+.edit-box .edit-close-button:hover{
+    background-color: red;
+    color: white;
+    font-weight:bolder;
 }
 .edit-box .edit-input-container{
     height: 60%;
@@ -362,6 +394,11 @@ body{
     color: aliceblue;
     background-color: transparent;
     margin: 10px;
+}
+.save-button-container .save-button:hover{
+    background-color: cyan;
+    color: antiquewhite;
+    font-weight: bolder;
 }
 .background{
     height: 100%;
